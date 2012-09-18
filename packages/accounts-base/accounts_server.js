@@ -263,10 +263,10 @@
       if (user._id !== userId)
         return false;
 
-      // user can only modify the 'profile' field
-      if (!_.all(fields, function (f) {
-        return (f === 'profile' || /^profile\./.test(f));
-      }))
+      // user can only modify the 'profile' field. sets to multiple
+      // sub-keys (eg profile.foo and profile.bar) are merged into entry
+      // in the fields list.
+      if (fields.length !== 1 || fields[0] !== 'profile')
         return false;
 
       return true;
